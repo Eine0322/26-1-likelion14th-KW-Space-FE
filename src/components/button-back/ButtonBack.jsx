@@ -1,4 +1,4 @@
-import './InputForm.css'
+import './ButtonBack.css'
 
 function ButtonBack() {
   return (
