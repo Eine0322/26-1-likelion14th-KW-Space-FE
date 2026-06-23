@@ -33,8 +33,12 @@ export default function MainPage() {
     loadRoomStatus()
   }, [selectedDate, selectedTime, selectedFloor])
 
-  // 강의실 클릭 시 예약 신청 모달 열기
   const handleRoomClick = (roomId) => {
+    if (!selectedDate || !selectedTime || !selectedFloor) {
+      alert('날짜, 시간, 층을 모두 선택해주세요.')
+      return
+    }
+
     setSelectedRoom(roomId)
     setIsReservationOpen(true)
   }
@@ -57,15 +61,20 @@ export default function MainPage() {
       </div>
 
       <div className='main-page__content'>
-        <FilterBar
-          selectedDate={selectedDate}
-          onDateSelect={setSelectedDate}
-          selectedTime={selectedTime}
-          onTimeSelect={setSelectedTime}
-          selectedFloor={selectedFloor}
-          onFloorSelect={setSelectedFloor}
-        />
-        <FloorMap floor={selectedFloor} roomStatus={roomStatus} onRoomClick={handleRoomClick} />
+        <div className='main-page__filter'>
+          <FilterBar
+            selectedDate={selectedDate}
+            onDateSelect={setSelectedDate}
+            selectedTime={selectedTime}
+            onTimeSelect={setSelectedTime}
+            selectedFloor={selectedFloor}
+            onFloorSelect={setSelectedFloor}
+          />
+        </div>
+
+        <div className='main-page__floor-map'>
+          <FloorMap floor={selectedFloor} roomStatus={roomStatus} onRoomClick={handleRoomClick} />
+        </div>
       </div>
 
       <ReservationModal

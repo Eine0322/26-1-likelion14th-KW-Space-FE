@@ -21,7 +21,6 @@ export default function FilterBar({
   const timeRef = useRef(null)
   const floorRef = useRef(null)
 
-  // 외부 클릭 시 드롭다운 닫기
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (dateRef.current && !dateRef.current.contains(e.target)) {
@@ -38,7 +37,6 @@ export default function FilterBar({
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
 
-  // 날짜를 mm/dd/yy 형식으로
   const formatDate = (date) => {
     if (!date) return '날짜'
     const mm = String(date.getMonth() + 1).padStart(2, '0')
@@ -77,7 +75,13 @@ export default function FilterBar({
           <span className='filter-bar__toggle-text'>{selectedTime || '시간'}</span>
           <img src={DropdownIcon} alt='' className='filter-bar__toggle-icon' />
         </div>
-        {isTimeOpen && <TimeDropdown selectedTime={selectedTime} onSelect={handleTimeSelect} />}
+        {isTimeOpen && (
+          <TimeDropdown
+            selectedDate={selectedDate}
+            selectedTime={selectedTime}
+            onSelect={handleTimeSelect}
+          />
+        )}
       </div>
 
       <div className='filter-bar__toggle-wrapper' ref={floorRef}>
