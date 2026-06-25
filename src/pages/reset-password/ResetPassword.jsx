@@ -1,4 +1,5 @@
 ﻿import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import KeyholeIcon from '../../assets/reset-password/keyhole.svg?react'
 import EyeIcon from '../../assets/reset-password/eye.svg?react'
 import ButtonBack from '../../components/button-back/ButtonBack'
@@ -7,8 +8,13 @@ import InputForm from '../../components/input-form/InputForm'
 import './ResetPassword.css'
 
 function ResetPassword() {
+  const navigate = useNavigate()
   const [isPasswordVisible, setIsPasswordVisible] = useState(false)
   const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState(false)
+
+  const handleBack = () => {
+    navigate(-1)
+  }
 
   const handlePasswordVisible = () => {
     setIsPasswordVisible((prev) => !prev)
@@ -18,10 +24,15 @@ function ResetPassword() {
     setIsConfirmPasswordVisible((prev) => !prev)
   }
 
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    navigate('/')
+  }
+
   return (
     <main className="reset-password">
       <section className="reset-password__container">
-        <ButtonBack />
+        <ButtonBack onClick={handleBack} />
 
         <div className="reset-password__title-area">
           <h1 className="reset-password__title">새 비밀번호 만들기</h1>
@@ -30,7 +41,7 @@ function ResetPassword() {
           </p>
         </div>
 
-        <form className="reset-password__form">
+        <form className="reset-password__form" onSubmit={handleSubmit}>
           <InputForm
             type={isPasswordVisible ? 'text' : 'password'}
             placeholder="새 비밀번호"
